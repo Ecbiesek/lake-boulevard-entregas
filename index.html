@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agendamento de Entrega — Lake Boulevard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f0;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e5e5e0;
+      padding: 0 2rem;
+    }
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 1rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: #1a3a5c;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-mark svg { width: 20px; height: 20px; fill: #fff; }
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .logo-name { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+    .logo-sub { font-size: 11px; color: #888; letter-spacing: 0.02em; }
+    .header-badge {
+      font-size: 12px;
+      background: #e8f0f8;
+      color: #1a3a5c;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .hero {
+      background: #fff;
+      border: 1px solid #e5e5e0;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1a3a5c;
+      background: #e8f0f8;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+    .hero p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .step {
+      background: #fff;
+      border: 1px solid #e5e5e0;
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1a3a5c;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-body { flex: 1; }
+    .step-title { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 3px; }
+    .step-desc { font-size: 13px; color: #666; line-height: 1.4; }
+
+    .calendar-card {
+      background: #fff;
+      border: 1px solid #e5e5e0;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .calendar-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid #f0f0eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .calendar-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #4a90d9;
+    }
+    .calendar-title { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+    .calendar-subtitle { font-size: 12px; color: #888; }
+    .calendar-frame {
+      width: 100%;
+      height: 520px;
+      border: none;
+      display: block;
+    }
+
+    .notice {
+      background: #f0f7ef;
+      border: 1px solid #c8e0c5;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .notice-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .notice-text { font-size: 13px; color: #2d5a27; line-height: 1.5; }
+    .notice-text strong { font-weight: 600; }
+
+    .contact-card {
+      background: #1a3a5c;
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .contact-text { color: #fff; }
+    .contact-text p:first-child { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .contact-text p:last-child { font-size: 13px; color: #a0b8d0; }
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: #1a3a5c;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .contact-btn:hover { opacity: 0.88; }
+    .contact-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    @media (max-width: 600px) {
+      main { padding: 1rem; }
+      .hero { padding: 1.25rem; }
+      .hero h1 { font-size: 20px; }
+      .calendar-frame { height: 420px; }
+      .contact-card { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 20 20"><path d="M10 2L3 7v11h5v-6h4v6h5V7L10 2z"/></svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">Biesek Engenharia</span>
+        <span class="logo-sub">Entrega de Imóveis</span>
+      </div>
+    </div>
+    <span class="header-badge">Lake Boulevard — Fase 1</span>
+  </div>
+</header>
+
+<main>
+
+  <div class="hero">
+    <span class="hero-tag">Agendamento de Entrega</span>
+    <h1>Escolha a data e horário da sua vistoria</h1>
+    <p>Os slots abaixo mostram os horários disponíveis para a entrega da sua unidade no Residencial Lake Boulevard. Entre em contato com nossa equipe para confirmar o horário de sua preferência.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Escolha um horário</div>
+        <div class="step-desc">Veja os slots disponíveis no calendário abaixo e anote o de sua preferência.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Entre em contato</div>
+        <div class="step-desc">Envie mensagem para nossa equipe com o horário escolhido e o número da sua unidade.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Confirmação</div>
+        <div class="step-desc">Nossa equipe confirma o agendamento e você recebe as instruções para o dia da entrega.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar-card">
+    <div class="calendar-header">
+      <div class="calendar-header-left">
+        <div class="cal-dot"></div>
+        <div>
+          <div class="calendar-title">Horários disponíveis</div>
+          <div class="calendar-subtitle">Atualizado em tempo real</div>
+        </div>
+      </div>
+    </div>
+    <iframe
+      class="calendar-frame"
+      src="https://calendar.google.com/calendar/embed?src=c_efdcb1f03e36922ef053c4a5288afbac407fa5b2b396dca4d77da9c9479a3611%40group.calendar.google.com&ctz=America%2FPorto_Velho&mode=AGENDA&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff"
+      title="Horários disponíveis para entrega"
+      loading="lazy"
+    ></iframe>
+  </div>
+
+  <div class="notice">
+    <span class="notice-icon">✅</span>
+    <p class="notice-text"><strong>Slots em azul</strong> estão disponíveis. Ao confirmar com nossa equipe, o horário será reservado exclusivamente para você. Verifique a disponibilidade antes de entrar em contato.</p>
+  </div>
+
+  <div class="contact-card">
+    <div class="contact-text">
+      <p>Pronto para agendar?</p>
+      <p>Envie o horário escolhido e o número da sua unidade pelo WhatsApp.</p>
+    </div>
+    <a class="contact-btn" href="https://wa.me/5569981010019?text=Olá%2C%20gostaria%20de%20agendar%20a%20entrega%20da%20minha%20unidade%20no%20Lake%20Boulevard." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.104 1.523 5.824L0 24l6.341-1.508A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 01-5.001-1.366l-.36-.213-3.762.894.952-3.653-.234-.375A9.817 9.817 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+      Falar com a equipe
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2026 Biesek Engenharia &mdash; Lake Boulevard Residencial
+</footer>
+
+</body>
+</html>
