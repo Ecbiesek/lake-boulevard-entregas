@@ -526,35 +526,32 @@ document.getElementById('btnConfirm').addEventListener('click', function() {
   btn.textContent = 'Enviando…';
 
   var params = new URLSearchParams({
-    action:   'reserve',
-    iCalUID:  pendingSlot.iCalUID || pendingSlot.id,
-    start:    pendingSlot.start.dateTime,
-    name:     name,
-    unit:     unit,
-    callback: 'handleScriptResponse'
+    action:  'reserve',
+    iCalUID: pendingSlot.iCalUID || pendingSlot.id,
+    start:   pendingSlot.start.dateTime,
+    name:    name,
+    unit:    unit
   });
 
-  window.handleScriptResponse = function(data) {
-    delete window.handleScriptResponse;
-    if (data && data.success) {
-      showResult(true, 'Interesse registrado!', 'Seu horário foi reservado com sucesso. Agora acesse o app CV CRM Cliente (aba Atendimento) ou o site e solicite a vistoria de entrega para confirmar.');
-    } else {
-      showResult(false, 'Horário indisponível', (data && data.error) || 'Este horário foi reservado por outro cliente. Escolha outro slot.');
-    }
-    btn.disabled = false;
-    btn.textContent = 'Confirmar interesse';
-  };
-
-  var script = document.createElement('script');
-  script.src = SCRIPT_URL + '?' + params.toString();
-  script.onerror = function() {
-    showResult(false, 'Erro de conexão', 'Não foi possível conectar. Verifique sua internet e tente novamente.');
-    btn.disabled = false;
-    btn.textContent = 'Confirmar interesse';
-    delete window.handleScriptResponse;
-  };
-  document.head.appendChild(script);
-  setTimeout(function() { document.head.removeChild(script); }, 15000);
+  fetch(SCRIPT_URL + '?' + params.toString(), { redirect: 'follow' })
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(data) {
+      if (data && data.success) {
+        showResult(true, 'Interesse registrado!', 'Seu horário foi reservado com sucesso. Agora acesse o app CV CRM Cliente (aba Atendimento) ou o site ecbiesek.cvcrm.com.br/cliente e solicite a vistoria de entrega para confirmar.');
+      } else {
+        showResult(false, 'Horário indisponível', (data && data.error) || 'Este horário foi reservado por outro cliente. Escolha outro slot.');
+      }
+      btn.disabled = false;
+      btn.textContent = 'Confirmar interesse';
+    })
+    .catch(function() {
+      showResult(false, 'Erro de conexão', 'Não foi possível conectar ao servidor. Verifique sua internet e tente novamente.');
+      btn.disabled = false;
+      btn.textContent = 'Confirmar interesse';
+    });
 });
 
 function showResult(success, title, text) {
