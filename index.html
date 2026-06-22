@@ -6,227 +6,117 @@
   <title>Agendamento de Entrega — Lake Boulevard</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f0; color: #1a1a1a; min-height: 100vh; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f5f5f0;
-      color: #1a1a1a;
-      min-height: 100vh;
-    }
+    /* HEADER */
+    header { background: #fff; border-bottom: 1px solid #e5e5e0; padding: 0 1.5rem; }
+    .header-inner { max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 1rem; }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo-mark { width: 34px; height: 34px; background: #1a3a5c; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-mark svg { width: 18px; height: 18px; fill: #fff; }
+    .logo-name { font-size: 14px; font-weight: 600; color: #1a1a1a; line-height: 1.1; }
+    .logo-sub { font-size: 11px; color: #888; }
+    .header-badge { font-size: 12px; background: #e8f0f8; color: #1a3a5c; padding: 4px 10px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
 
-    header {
-      background: #fff;
-      border-bottom: 1px solid #e5e5e0;
-      padding: 0 2rem;
-    }
-    .header-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      gap: 1rem;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .logo-mark {
-      width: 36px;
-      height: 36px;
-      background: #1a3a5c;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .logo-mark svg { width: 20px; height: 20px; fill: #fff; }
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-    .logo-name { font-size: 14px; font-weight: 600; color: #1a1a1a; }
-    .logo-sub { font-size: 11px; color: #888; letter-spacing: 0.02em; }
-    .header-badge {
-      font-size: 12px;
-      background: #e8f0f8;
-      color: #1a3a5c;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
+    /* MAIN */
+    main { max-width: 860px; margin: 0 auto; padding: 1.5rem; }
 
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
+    /* HERO */
+    .hero { background: #fff; border: 1px solid #e5e5e0; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .hero-tag { display: inline-block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: #1a3a5c; background: #e8f0f8; padding: 3px 10px; border-radius: 20px; margin-bottom: .75rem; }
+    .hero h1 { font-size: 22px; font-weight: 600; margin-bottom: .4rem; line-height: 1.2; }
+    .hero p { font-size: 14px; color: #555; line-height: 1.6; }
 
-    .hero {
-      background: #fff;
-      border: 1px solid #e5e5e0;
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 1.5rem;
-    }
-    .hero-tag {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #1a3a5c;
-      background: #e8f0f8;
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-bottom: 1rem;
-    }
-    .hero h1 {
-      font-size: 24px;
-      font-weight: 600;
-      color: #1a1a1a;
-      margin-bottom: 0.5rem;
-      line-height: 1.2;
-    }
-    .hero p {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.6;
-      max-width: 600px;
-    }
+    /* STEPS */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: .75rem; margin-bottom: 1.25rem; }
+    .step { background: #fff; border: 1px solid #e5e5e0; border-radius: 10px; padding: 1rem; display: flex; gap: 10px; }
+    .step-num { width: 26px; height: 26px; border-radius: 50%; background: #1a3a5c; color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .step-desc { font-size: 12px; color: #666; line-height: 1.4; }
 
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .step {
-      background: #fff;
-      border: 1px solid #e5e5e0;
-      border-radius: 12px;
-      padding: 1.25rem;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-    .step-num {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #1a3a5c;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .step-body { flex: 1; }
-    .step-title { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 3px; }
-    .step-desc { font-size: 13px; color: #666; line-height: 1.4; }
+    /* DATE TABS */
+    .dates-wrap { margin-bottom: 1.25rem; }
+    .dates-scroll { display: flex; gap: .5rem; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+    .dates-scroll::-webkit-scrollbar { display: none; }
+    .date-tab { flex-shrink: 0; padding: 7px 14px; border-radius: 20px; border: 1px solid #e5e5e0; background: #fff; font-size: 13px; color: #555; cursor: pointer; transition: all .15s; white-space: nowrap; }
+    .date-tab:hover { border-color: #1a3a5c; color: #1a3a5c; }
+    .date-tab.active { background: #1a3a5c; border-color: #1a3a5c; color: #fff; font-weight: 500; }
 
-    .calendar-card {
-      background: #fff;
-      border: 1px solid #e5e5e0;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-    }
-    .calendar-header {
-      padding: 1rem 1.25rem;
-      border-bottom: 1px solid #f0f0eb;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .calendar-header-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .cal-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #4a90d9;
-    }
-    .calendar-title { font-size: 14px; font-weight: 600; color: #1a1a1a; }
-    .calendar-subtitle { font-size: 12px; color: #888; }
-    .calendar-frame {
-      width: 100%;
-      height: 520px;
-      border: none;
-      display: block;
-    }
+    /* SLOTS */
+    .slots-card { background: #fff; border: 1px solid #e5e5e0; border-radius: 12px; overflow: hidden; margin-bottom: 1.25rem; }
+    .slots-header { padding: .875rem 1.25rem; border-bottom: 1px solid #f0f0eb; display: flex; align-items: center; justify-content: space-between; }
+    .slots-title { font-size: 14px; font-weight: 600; }
+    .slots-subtitle { font-size: 12px; color: #888; }
+    .slots-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: #f0f0eb; }
+    .slot { background: #fff; padding: 1.25rem 1rem; display: flex; flex-direction: column; gap: .5rem; }
+    .slot-time { font-size: 16px; font-weight: 600; color: #1a1a1a; }
+    .slot-duration { font-size: 11px; color: #aaa; }
+    .slot-btn { margin-top: .25rem; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; border: none; cursor: pointer; transition: all .15s; }
+    .slot-btn.available { background: #1a3a5c; color: #fff; }
+    .slot-btn.available:hover { background: #0f2640; }
+    .slot-btn.reserved { background: #fef3c7; color: #92400e; cursor: default; display: flex; align-items: center; gap: 6px; }
+    .slot-btn.unavailable { background: #f3f4f6; color: #aaa; cursor: default; }
+    .slot-who { font-size: 11px; color: #888; }
+    .slots-loading { padding: 2rem; text-align: center; color: #aaa; font-size: 14px; }
+    .slots-empty { padding: 2rem; text-align: center; color: #aaa; font-size: 14px; }
 
-    .notice {
-      background: #f0f7ef;
-      border: 1px solid #c8e0c5;
-      border-radius: 10px;
-      padding: 1rem 1.25rem;
-      margin-bottom: 1.5rem;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-    .notice-icon {
-      font-size: 18px;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
+    /* NOTICE */
+    .notice { background: #f0f7ef; border: 1px solid #c8e0c5; border-radius: 10px; padding: .875rem 1.125rem; margin-bottom: 1.25rem; display: flex; gap: 10px; align-items: flex-start; }
     .notice-text { font-size: 13px; color: #2d5a27; line-height: 1.5; }
-    .notice-text strong { font-weight: 600; }
 
-    .contact-card {
-      background: #1a3a5c;
-      border-radius: 12px;
-      padding: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .contact-text { color: #fff; }
-    .contact-text p:first-child { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-    .contact-text p:last-child { font-size: 13px; color: #a0b8d0; }
-    .contact-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #fff;
-      color: #1a3a5c;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 10px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: opacity 0.15s;
-    }
-    .contact-btn:hover { opacity: 0.88; }
-    .contact-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+    /* CTA */
+    .cta { background: #1a3a5c; border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .cta-text p:first-child { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+    .cta-text p:last-child { font-size: 12px; color: #a0b8d0; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 7px; background: #fff; color: #1a3a5c; font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 8px; text-decoration: none; white-space: nowrap; }
+    .cta-btn:hover { opacity: .88; }
 
-    footer {
-      text-align: center;
-      padding: 1.5rem 2rem;
-      font-size: 12px;
-      color: #aaa;
-    }
+    footer { text-align: center; padding: 1.5rem; font-size: 12px; color: #aaa; }
 
-    @media (max-width: 600px) {
+    /* MODAL */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none; align-items: center; justify-content: center; z-index: 100; padding: 1rem; }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: #fff; border-radius: 14px; padding: 1.75rem; width: 100%; max-width: 420px; }
+    .modal-title { font-size: 17px; font-weight: 600; margin-bottom: .25rem; }
+    .modal-subtitle { font-size: 13px; color: #666; margin-bottom: 1.5rem; }
+    .modal-slot-info { background: #f0f7ff; border: 1px solid #c0d8f0; border-radius: 8px; padding: .75rem 1rem; margin-bottom: 1.25rem; font-size: 13px; color: #1a3a5c; font-weight: 500; }
+    label { display: block; font-size: 13px; font-weight: 500; margin-bottom: .375rem; color: #333; }
+    .field { margin-bottom: 1rem; }
+    input[type=text] { width: 100%; padding: 9px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; transition: border .15s; }
+    input[type=text]:focus { border-color: #1a3a5c; }
+
+    /* Custom searchable dropdown */
+    .select-wrap { position: relative; }
+    .select-input { width: 100%; padding: 9px 32px 9px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; cursor: pointer; background: #fff; outline: none; transition: border .15s; }
+    .select-input:focus { border-color: #1a3a5c; }
+    .select-arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #888; font-size: 12px; }
+    .dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #fff; border: 1px solid #ddd; border-radius: 8px; max-height: 220px; overflow-y: auto; z-index: 200; display: none; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    .dropdown.open { display: block; }
+    .dropdown-search { padding: 8px 10px; border-bottom: 1px solid #f0f0eb; }
+    .dropdown-search input { width: 100%; padding: 6px 10px; border: 1px solid #e5e5e0; border-radius: 6px; font-size: 13px; outline: none; }
+    .dropdown-list { max-height: 170px; overflow-y: auto; }
+    .dropdown-item { padding: 9px 14px; font-size: 13px; cursor: pointer; }
+    .dropdown-item:hover, .dropdown-item.highlighted { background: #f0f7ff; color: #1a3a5c; }
+    .dropdown-empty { padding: 1rem; text-align: center; font-size: 13px; color: #aaa; }
+
+    .modal-actions { display: flex; gap: .75rem; margin-top: 1.25rem; }
+    .btn-cancel { flex: 1; padding: 10px; border: 1px solid #e5e5e0; border-radius: 8px; background: #fff; color: #666; font-size: 14px; cursor: pointer; }
+    .btn-confirm { flex: 2; padding: 10px; border: none; border-radius: 8px; background: #1a3a5c; color: #fff; font-size: 14px; font-weight: 500; cursor: pointer; transition: background .15s; }
+    .btn-confirm:hover { background: #0f2640; }
+    .btn-confirm:disabled { background: #aaa; cursor: default; }
+
+    /* Success / Error state inside modal */
+    .modal-result { text-align: center; padding: .5rem 0 1rem; }
+    .modal-result .icon { font-size: 2.5rem; margin-bottom: .75rem; }
+    .modal-result h3 { font-size: 16px; font-weight: 600; margin-bottom: .375rem; }
+    .modal-result p { font-size: 13px; color: #666; line-height: 1.5; }
+    .btn-close { width: 100%; margin-top: 1.25rem; padding: 10px; border: 1px solid #e5e5e0; border-radius: 8px; background: #fff; color: #333; font-size: 14px; cursor: pointer; }
+
+    @media (max-width: 540px) {
       main { padding: 1rem; }
       .hero { padding: 1.25rem; }
-      .hero h1 { font-size: 20px; }
-      .calendar-frame { height: 420px; }
-      .contact-card { flex-direction: column; }
+      .hero h1 { font-size: 19px; }
+      .cta { flex-direction: column; }
     }
   </style>
 </head>
@@ -235,12 +125,10 @@
 <header>
   <div class="header-inner">
     <div class="logo">
-      <div class="logo-mark">
-        <svg viewBox="0 0 20 20"><path d="M10 2L3 7v11h5v-6h4v6h5V7L10 2z"/></svg>
-      </div>
-      <div class="logo-text">
-        <span class="logo-name">Biesek Engenharia</span>
-        <span class="logo-sub">Entrega de Imóveis</span>
+      <div class="logo-mark"><svg viewBox="0 0 20 20"><path d="M10 2L3 7v11h5v-6h4v6h5V7L10 2z"/></svg></div>
+      <div>
+        <div class="logo-name">Biesek Engenharia</div>
+        <div class="logo-sub">Entrega de Imóveis</div>
       </div>
     </div>
     <span class="header-badge">Lake Boulevard — Fase 1</span>
@@ -252,72 +140,435 @@
   <div class="hero">
     <span class="hero-tag">Agendamento de Entrega</span>
     <h1>Escolha a data e horário da sua vistoria</h1>
-    <p>Os slots abaixo mostram os horários disponíveis para a entrega da sua unidade no Residencial Lake Boulevard. Escolha um horário e solicite o agendamento pelo <strong>CV CRM Cliente</strong>, conforme o Manual de Entrega do Imóvel.</p>
+    <p>Selecione um slot disponível, informe seu nome e unidade e manifeste seu interesse. Nossa equipe confirmará o agendamento pelo <strong>CV CRM Cliente</strong>.</p>
   </div>
 
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-body">
+      <div>
         <div class="step-title">Escolha um horário</div>
-        <div class="step-desc">Veja os slots disponíveis no calendário abaixo e anote o de sua preferência.</div>
+        <div class="step-desc">Selecione um slot disponível abaixo e clique em "Reservar".</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-title">Solicite pelo CV CRM</div>
-        <div class="step-desc">Acesse o app CV CRM Cliente (aba Atendimento) ou o site e solicite a vistoria de entrega.</div>
+      <div>
+        <div class="step-title">Informe seus dados</div>
+        <div class="step-desc">Confirme seu nome e selecione sua unidade no formulário.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-body">
-        <div class="step-title">Confirmação</div>
-        <div class="step-desc">Nossa equipe confirma o agendamento e você recebe as instruções para o dia da entrega.</div>
+      <div>
+        <div class="step-title">Solicite pelo CV CRM</div>
+        <div class="step-desc">Acesse o app CV CRM Cliente (aba Atendimento) e solicite a vistoria de entrega.</div>
       </div>
     </div>
   </div>
 
-  <div class="calendar-card">
-    <div class="calendar-header">
-      <div class="calendar-header-left">
-        <div class="cal-dot"></div>
-        <div>
-          <div class="calendar-title">Horários disponíveis</div>
-          <div class="calendar-subtitle">Atualizado em tempo real</div>
-        </div>
+  <div class="dates-wrap">
+    <div class="dates-scroll" id="dateTabs"></div>
+  </div>
+
+  <div class="slots-card">
+    <div class="slots-header">
+      <div>
+        <div class="slots-title" id="slotsTitle">Carregando horários…</div>
+        <div class="slots-subtitle">Atualizado em tempo real</div>
       </div>
     </div>
-    <iframe
-      class="calendar-frame"
-      src="https://calendar.google.com/calendar/embed?src=c_efdcb1f03e36922ef053c4a5288afbac407fa5b2b396dca4d77da9c9479a3611%40group.calendar.google.com&ctz=America%2FPorto_Velho&mode=AGENDA&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff"
-      title="Horários disponíveis para entrega"
-      loading="lazy"
-    ></iframe>
+    <div class="slots-grid" id="slotsGrid">
+      <div class="slots-loading">Buscando disponibilidade…</div>
+    </div>
   </div>
 
   <div class="notice">
-    <span class="notice-icon">✅</span>
-    <p class="notice-text"><strong>Slots em azul</strong> estão disponíveis. Ao confirmar com nossa equipe, o horário será reservado exclusivamente para você. Verifique a disponibilidade antes de entrar em contato.</p>
+    <span style="font-size:16px;flex-shrink:0">ℹ️</span>
+    <p class="notice-text">Slots em <strong>azul</strong> estão disponíveis. Slots em <strong>amarelo</strong> estão com interesse manifestado e aguardam confirmação. Caso um slot não seja confirmado no CV CRM em 24h, ele será liberado automaticamente.</p>
   </div>
 
-  <div class="contact-card">
-    <div class="contact-text">
-      <p>Como solicitar o agendamento?</p>
-      <p>Conforme o Manual de Entrega do Imóvel, a solicitação é feita pelo <strong style="color:#fff;">CV CRM Cliente</strong> — aba <strong style="color:#fff;">Atendimento</strong> no aplicativo ou pelo site abaixo.</p>
+  <div class="cta">
+    <div class="cta-text">
+      <p>Já manifestou interesse? Finalize pelo CV CRM</p>
+      <p>Acesse a aba Atendimento no app ou pelo site para solicitar a vistoria de entrega.</p>
     </div>
-    <a class="contact-btn" href="https://ecbiesek.cvcrm.com.br/cliente" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    <a class="cta-btn" href="https://ecbiesek.cvcrm.com.br/cliente" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
       Acessar CV CRM Cliente
     </a>
   </div>
 
 </main>
 
-<footer>
-  &copy; 2026 Biesek Engenharia &mdash; Lake Boulevard Residencial
-</footer>
+<footer>© 2026 Biesek Engenharia — Lake Boulevard Residencial</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <div id="modalForm">
+      <p class="modal-title">Manifestar interesse</p>
+      <p class="modal-subtitle">Preencha os dados abaixo para reservar este horário.</p>
+      <div class="modal-slot-info" id="modalSlotInfo"></div>
+
+      <div class="field">
+        <label for="inputName">Seu nome completo</label>
+        <input type="text" id="inputName" placeholder="Digite seu nome" autocomplete="off" />
+      </div>
+
+      <div class="field">
+        <label>Sua unidade</label>
+        <div class="select-wrap">
+          <div class="select-input" id="unitDisplay" tabindex="0">Selecione sua unidade</div>
+          <span class="select-arrow">▾</span>
+          <div class="dropdown" id="unitDropdown">
+            <div class="dropdown-search">
+              <input type="text" id="unitSearch" placeholder="Pesquisar unidade…" autocomplete="off" />
+            </div>
+            <div class="dropdown-list" id="unitList"></div>
+          </div>
+        </div>
+        <input type="hidden" id="selectedUnit" />
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" id="btnCancel">Cancelar</button>
+        <button class="btn-confirm" id="btnConfirm" disabled>Confirmar interesse</button>
+      </div>
+    </div>
+
+    <div id="modalResult" style="display:none">
+      <div class="modal-result">
+        <div class="icon" id="resultIcon"></div>
+        <h3 id="resultTitle"></h3>
+        <p id="resultText"></p>
+      </div>
+      <button class="btn-close" id="btnClose">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIG — preencher após deploy do Apps Script
+// ============================================================
+var CAL_ID      = 'c_efdcb1f03e36922ef053c4a5288afbac407fa5b2b396dca4d77da9c9479a3611@group.calendar.google.com';
+var API_KEY     = 'AIzaSyAMdfs3zApqWfmBBKePY4n1P-W9yBY8oRk';
+var SCRIPT_URL  = ''; // ← preencher após deploy: https://script.google.com/macros/s/.../exec
+
+// ============================================================
+// Gerar unidades
+// ============================================================
+var UNITS = (function() {
+  var list = [];
+  ['A','B','E','F'].forEach(function(t) {
+    for (var f = 1; f <= 6; f++) {
+      for (var u = 1; u <= 4; u++) {
+        list.push('LCR-' + t + f + '0' + u);
+      }
+    }
+  });
+  return list;
+})();
+
+// ============================================================
+// Estado
+// ============================================================
+var allEvents    = [];
+var selectedDate = null;
+var pendingSlot  = null;
+var calendarEncoded = encodeURIComponent(CAL_ID);
+
+// ============================================================
+// Fetch events
+// ============================================================
+function fetchEvents() {
+  var now     = new Date();
+  var timeMin = now.toISOString();
+  var timeMax = new Date('2026-07-08T00:00:00-04:00').toISOString();
+  var url = 'https://www.googleapis.com/calendar/v3/calendars/' +
+            calendarEncoded + '/events' +
+            '?key=' + API_KEY +
+            '&timeMin=' + encodeURIComponent(timeMin) +
+            '&timeMax=' + encodeURIComponent(timeMax) +
+            '&singleEvents=true&orderBy=startTime&maxResults=200';
+
+  fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      allEvents = (data.items || []).filter(function(e) {
+        return e.status !== 'cancelled';
+      });
+      buildDateTabs();
+      renderSlots();
+    })
+    .catch(function() {
+      document.getElementById('slotsGrid').innerHTML =
+        '<div class="slots-loading">Erro ao carregar horários. Atualize a página.</div>';
+    });
+}
+
+// ============================================================
+// Date tabs
+// ============================================================
+function buildDateTabs() {
+  var dates = [];
+  var seen  = {};
+  allEvents.forEach(function(e) {
+    var d = (e.start.dateTime || e.start.date).slice(0, 10);
+    if (!seen[d]) { seen[d] = true; dates.push(d); }
+  });
+
+  var container = document.getElementById('dateTabs');
+  container.innerHTML = '';
+  if (!dates.length) return;
+
+  if (!selectedDate || dates.indexOf(selectedDate) === -1) selectedDate = dates[0];
+
+  dates.forEach(function(d) {
+    var tab  = document.createElement('button');
+    tab.className = 'date-tab' + (d === selectedDate ? ' active' : '');
+    tab.textContent = formatDateTab(d);
+    tab.addEventListener('click', function() {
+      selectedDate = d;
+      document.querySelectorAll('.date-tab').forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      renderSlots();
+    });
+    container.appendChild(tab);
+  });
+}
+
+function formatDateTab(iso) {
+  var d = new Date(iso + 'T12:00:00');
+  var days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  var months = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  return days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()];
+}
+
+// ============================================================
+// Render slots for selected date
+// ============================================================
+function renderSlots() {
+  if (!selectedDate) return;
+  var grid  = document.getElementById('slotsGrid');
+  var title = document.getElementById('slotsTitle');
+  var dayEvents = allEvents.filter(function(e) {
+    return (e.start.dateTime || e.start.date).startsWith(selectedDate);
+  });
+
+  title.textContent = formatFullDate(selectedDate);
+
+  if (!dayEvents.length) {
+    grid.innerHTML = '<div class="slots-empty">Nenhum slot disponível nesta data.</div>';
+    return;
+  }
+
+  grid.innerHTML = '';
+  dayEvents.forEach(function(ev) {
+    var summary = ev.summary || '';
+    var isAvailable = summary === 'SLOT DISPONÍVEL';
+    var isPending   = summary.indexOf('⏳') === 0;
+
+    var startDT = new Date(ev.start.dateTime);
+    var endDT   = new Date(ev.end.dateTime);
+    var startStr = padTime(startDT);
+    var endStr   = padTime(endDT);
+
+    var slot = document.createElement('div');
+    slot.className = 'slot';
+    slot.innerHTML =
+      '<div class="slot-time">' + startStr + '</div>' +
+      '<div class="slot-duration">até ' + endStr + ' · 1h30</div>';
+
+    var btn = document.createElement('button');
+    btn.className = 'slot-btn ' + (isAvailable ? 'available' : (isPending ? 'reserved' : 'unavailable'));
+
+    if (isAvailable) {
+      btn.textContent = 'Reservar este horário';
+      btn.addEventListener('click', function() { openModal(ev, startStr, endStr); });
+    } else if (isPending) {
+      btn.innerHTML = '⏳ Aguardando confirmação';
+    } else {
+      btn.textContent = 'Indisponível';
+    }
+
+    slot.appendChild(btn);
+
+    if (isPending) {
+      var who = document.createElement('div');
+      who.className = 'slot-who';
+      who.textContent = summary.replace('⏳ ', '');
+      slot.appendChild(who);
+    }
+
+    grid.appendChild(slot);
+  });
+}
+
+function padTime(dt) {
+  return String(dt.getHours()).padStart(2,'0') + ':' + String(dt.getMinutes()).padStart(2,'0');
+}
+
+function formatFullDate(iso) {
+  var d = new Date(iso + 'T12:00:00');
+  var days = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+  var months = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  return days[d.getDay()] + ', ' + d.getDate() + ' de ' + months[d.getMonth()];
+}
+
+// ============================================================
+// Modal
+// ============================================================
+function openModal(ev, startStr, endStr) {
+  pendingSlot = ev;
+  document.getElementById('modalSlotInfo').textContent =
+    '📅 ' + formatFullDate(selectedDate) + '   🕐 ' + startStr + ' – ' + endStr;
+  document.getElementById('inputName').value = '';
+  document.getElementById('selectedUnit').value = '';
+  document.getElementById('unitDisplay').textContent = 'Selecione sua unidade';
+  document.getElementById('unitSearch').value = '';
+  document.getElementById('btnConfirm').disabled = true;
+  document.getElementById('modalForm').style.display = '';
+  document.getElementById('modalResult').style.display = 'none';
+  document.getElementById('unitDropdown').classList.remove('open');
+  renderUnitList('');
+  document.getElementById('modalBackdrop').classList.add('open');
+  setTimeout(function() { document.getElementById('inputName').focus(); }, 100);
+}
+
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('open');
+  pendingSlot = null;
+}
+
+document.getElementById('btnCancel').addEventListener('click', closeModal);
+document.getElementById('btnClose').addEventListener('click', function() {
+  closeModal();
+  fetchEvents();
+});
+document.getElementById('modalBackdrop').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Update confirm button state
+function checkConfirm() {
+  var name = document.getElementById('inputName').value.trim();
+  var unit = document.getElementById('selectedUnit').value;
+  document.getElementById('btnConfirm').disabled = !(name.length >= 2 && unit);
+}
+document.getElementById('inputName').addEventListener('input', checkConfirm);
+
+// ============================================================
+// Unit dropdown
+// ============================================================
+function renderUnitList(filter) {
+  var list = document.getElementById('unitList');
+  var f    = filter.toLowerCase().replace(/-/g,'');
+  var filtered = filter ? UNITS.filter(function(u) {
+    return u.toLowerCase().replace(/-/g,'').indexOf(f) >= 0;
+  }) : UNITS;
+
+  if (!filtered.length) {
+    list.innerHTML = '<div class="dropdown-empty">Nenhuma unidade encontrada</div>';
+    return;
+  }
+  list.innerHTML = filtered.map(function(u) {
+    return '<div class="dropdown-item" data-value="' + u + '">' + u + '</div>';
+  }).join('');
+
+  list.querySelectorAll('.dropdown-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var val = item.getAttribute('data-value');
+      document.getElementById('selectedUnit').value = val;
+      document.getElementById('unitDisplay').textContent = val;
+      document.getElementById('unitDropdown').classList.remove('open');
+      checkConfirm();
+    });
+  });
+}
+
+document.getElementById('unitDisplay').addEventListener('click', function() {
+  var dd = document.getElementById('unitDropdown');
+  dd.classList.toggle('open');
+  if (dd.classList.contains('open')) {
+    document.getElementById('unitSearch').focus();
+  }
+});
+
+document.getElementById('unitSearch').addEventListener('input', function() {
+  renderUnitList(this.value);
+});
+
+document.addEventListener('click', function(e) {
+  var wrap = document.querySelector('.select-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('unitDropdown').classList.remove('open');
+  }
+});
+
+// ============================================================
+// Submit reservation
+// ============================================================
+document.getElementById('btnConfirm').addEventListener('click', function() {
+  if (!pendingSlot || !SCRIPT_URL) {
+    showResult(false, 'Sistema em configuração', 'O agendamento online estará disponível em breve. Por favor, acesse o CV CRM Cliente para solicitar a entrega.');
+    return;
+  }
+
+  var name = document.getElementById('inputName').value.trim();
+  var unit = document.getElementById('selectedUnit').value;
+  var btn  = document.getElementById('btnConfirm');
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+
+  var params = new URLSearchParams({
+    action:   'reserve',
+    iCalUID:  pendingSlot.iCalUID || pendingSlot.id,
+    start:    pendingSlot.start.dateTime,
+    name:     name,
+    unit:     unit,
+    callback: 'handleScriptResponse'
+  });
+
+  window.handleScriptResponse = function(data) {
+    delete window.handleScriptResponse;
+    if (data && data.success) {
+      showResult(true, 'Interesse registrado!', 'Seu horário foi reservado com sucesso. Agora acesse o app CV CRM Cliente (aba Atendimento) ou o site e solicite a vistoria de entrega para confirmar.');
+    } else {
+      showResult(false, 'Horário indisponível', (data && data.error) || 'Este horário foi reservado por outro cliente. Escolha outro slot.');
+    }
+    btn.disabled = false;
+    btn.textContent = 'Confirmar interesse';
+  };
+
+  var script = document.createElement('script');
+  script.src = SCRIPT_URL + '?' + params.toString();
+  script.onerror = function() {
+    showResult(false, 'Erro de conexão', 'Não foi possível conectar. Verifique sua internet e tente novamente.');
+    btn.disabled = false;
+    btn.textContent = 'Confirmar interesse';
+    delete window.handleScriptResponse;
+  };
+  document.head.appendChild(script);
+  setTimeout(function() { document.head.removeChild(script); }, 15000);
+});
+
+function showResult(success, title, text) {
+  document.getElementById('modalForm').style.display = 'none';
+  document.getElementById('modalResult').style.display = '';
+  document.getElementById('resultIcon').textContent = success ? '✅' : '⚠️';
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultText').textContent  = text;
+}
+
+// ============================================================
+// Init + auto-refresh every 60s
+// ============================================================
+fetchEvents();
+setInterval(fetchEvents, 60000);
+</script>
 
 </body>
 </html>
