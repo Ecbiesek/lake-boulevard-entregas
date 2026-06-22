@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — Lake Boulevard Entregas</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f1f5f9; color: #1e293b; min-height: 100vh; }
+
+  .topbar { background: #1a3a5c; color: #fff; padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
+  .topbar-logo { font-weight: 700; font-size: 15px; }
+  .topbar-title { font-size: 13px; opacity: .7; }
+  .topbar-badge { margin-left: auto; background: #e2a027; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: .05em; }
+
+  .login-wrap { max-width: 360px; margin: 80px auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,.08); padding: 36px; }
+  .login-wrap h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .login-wrap p { font-size: 13px; color: #64748b; margin-bottom: 24px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .04em; }
+  .field input { width: 100%; padding: 10px 12px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; transition: border .15s; }
+  .field input:focus { border-color: #1a3a5c; }
+  .btn-primary { width: 100%; padding: 12px; background: #1a3a5c; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s; }
+  .btn-primary:hover { background: #15304f; }
+  .err { color: #dc2626; font-size: 13px; margin-top: 8px; display: none; }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+  .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #94a3b8; margin-bottom: 12px; }
+
+  .slot-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 8px rgba(0,0,0,.06); margin-bottom: 32px; }
+  .slot-table th { background: #f8fafc; padding: 10px 14px; text-align: left; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #64748b; border-bottom: 1px solid #e2e8f0; }
+  .slot-table td { padding: 11px 14px; border-bottom: 1px solid #f1f5f9; font-size: 13px; vertical-align: middle; }
+  .slot-table tr:last-child td { border-bottom: none; }
+  .slot-table tr:hover td { background: #f8fafc; }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-available { background: #dbeafe; color: #1d4ed8; }
+  .badge-pending   { background: #fef3c7; color: #92400e; }
+  .badge-assigned  { background: #dcfce7; color: #166534; }
+  .badge-other     { background: #f1f5f9; color: #475569; }
+
+  .btn-sm { padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; transition: background .15s; }
+  .btn-assign  { background: #1a3a5c; color: #fff; }
+  .btn-assign:hover { background: #15304f; }
+  .btn-release { background: #fee2e2; color: #dc2626; }
+  .btn-release:hover { background: #fecaca; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 100; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #fff; border-radius: 14px; padding: 28px; width: 100%; max-width: 400px; box-shadow: 0 8px 40px rgba(0,0,0,.18); }
+  .modal h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .modal .slot-info { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+  .modal .field select { width: 100%; padding: 10px 12px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; }
+  .modal .field select:focus { border-color: #1a3a5c; }
+  .modal-search { width: 100%; padding: 8px 12px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 13px; margin-bottom: 6px; outline: none; }
+  .modal-search:focus { border-color: #1a3a5c; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+  .modal-actions .btn-primary { flex: 1; }
+  .btn-cancel { flex: 1; padding: 12px; background: #f1f5f9; color: #475569; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .btn-cancel:hover { background: #e2e8f0; }
+
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1e293b; color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 500; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 200; }
+  .toast.show { opacity: 1; }
+  .toast.ok  { background: #166534; }
+  .toast.err { background: #dc2626; }
+
+  .loading { text-align: center; color: #94a3b8; padding: 40px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-logo">ECBiesek Engenharia</div>
+    <div class="topbar-title">Lake Boulevard — Painel de Entregas</div>
+  </div>
+  <div class="topbar-badge">ADMIN</div>
+</div>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <h2>Acesso restrito</h2>
+  <p>Digite a senha de acesso para continuar.</p>
+  <div class="field">
+    <label>Senha</label>
+    <input type="password" id="tokenInput" placeholder="••••••••" autocomplete="off">
+  </div>
+  <button class="btn-primary" onclick="doLogin()">Entrar</button>
+  <div class="err" id="loginErr">Senha incorreta. Tente novamente.</div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="mainWrap" style="display:none">
+  <div class="section-title">Slots — 26 jun a 7 jul 2026</div>
+  <table class="slot-table" id="slotTable">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Horário</th>
+        <th>Status / Unidade</th>
+        <th style="width:180px">Ação</th>
+      </tr>
+    </thead>
+    <tbody id="slotBody">
+      <tr><td colspan="4" class="loading">Carregando slots…</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MODAL ATRIBUIR -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>Atribuir unidade</h3>
+    <div class="slot-info" id="modalSlotInfo"></div>
+    <div class="field">
+      <label>Pesquisar unidade</label>
+      <input class="modal-search" id="unitSearch" placeholder="Ex: LCR-A101" oninput="filterUnits()">
+      <select id="unitSelect" size="6" style="width:100%;border:1.5px solid #e2e8f0;border-radius:8px;font-size:13px;padding:4px"></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-primary" onclick="confirmAssign()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxcwxTbITOzWSTDnqgmHxKIq6qt5wiIIVE_u_cTIJ8EMuLuKf0wvDQ9UOrOFtYEqypy/exec';
+var CAL_ID     = 'c_efdcb1f03e36922ef053c4a5288afbac407fa5b2b396dca4d77da9c9479a3611@group.calendar.google.com';
+var API_KEY    = 'AIzaSyAMdfs3zApqWfmBBKePY4n1P-W9yBY8oRk';
+
+var token = '';
+var pendingStart = null;
+var allUnits = [];
+var allEvents = [];
+
+// Gera lista de unidades LCR
+(function() {
+  var torres = ['A','B','E','F'];
+  torres.forEach(function(t) {
+    for (var f = 1; f <= 6; f++) {
+      for (var u = 1; u <= 4; u++) {
+        allUnits.push('LCR-' + t + f + '0' + u);
+      }
+    }
+  });
+})();
+
+function doLogin() {
+  var v = document.getElementById('tokenInput').value.trim();
+  if (!v) return;
+  token = v;
+  document.getElementById('loginErr').style.display = 'none';
+  loadSlots();
+}
+
+document.getElementById('tokenInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+
+function showMain() {
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('mainWrap').style.display = '';
+}
+
+function loadSlots() {
+  var now    = new Date('2026-06-26T00:00:00-04:00').toISOString();
+  var end    = new Date('2026-07-08T00:00:00-04:00').toISOString();
+  var url    = 'https://www.googleapis.com/calendar/v3/calendars/' +
+               encodeURIComponent(CAL_ID) +
+               '/events?key=' + API_KEY +
+               '&timeMin=' + encodeURIComponent(now) +
+               '&timeMax=' + encodeURIComponent(end) +
+               '&singleEvents=true&orderBy=startTime&maxResults=200';
+
+  fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.error) {
+        if (data.error.code === 403 || data.error.code === 401) {
+          document.getElementById('loginErr').textContent = 'Senha incorreta. Tente novamente.';
+          document.getElementById('loginErr').style.display = 'block';
+          token = '';
+          return;
+        }
+      }
+      allEvents = (data.items || []).filter(function(e) {
+        return e.start && e.start.dateTime;
+      });
+      showMain();
+      renderTable();
+    })
+    .catch(function() { showToast('Erro ao carregar calendário', 'err'); });
+}
+
+var DAYS_PT = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+var MONTHS_PT = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+
+function fmtDate(iso) {
+  var d = new Date(iso);
+  return DAYS_PT[d.getDay()] + ', ' + d.getDate() + ' ' + MONTHS_PT[d.getMonth()];
+}
+function fmtTime(iso) {
+  var d = new Date(iso);
+  return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+
+function getStatus(title) {
+  if (title === 'SLOT DISPONÍVEL') return 'available';
+  if (title && title.indexOf('⏳') === 0) return 'pending';
+  if (title && title.match(/^LCR-/)) return 'assigned';
+  return 'other';
+}
+
+function renderTable() {
+  var tbody = document.getElementById('slotBody');
+  if (!allEvents.length) { tbody.innerHTML = '<tr><td colspan="4" class="loading">Nenhum slot encontrado.</td></tr>'; return; }
+  var html = '';
+  allEvents.forEach(function(ev) {
+    var start  = ev.start.dateTime;
+    var title  = ev.summary || '';
+    var status = getStatus(title);
+    var badge  = '';
+    var actions = '';
+
+    if (status === 'available') {
+      badge   = '<span class="badge badge-available">Disponível</span>';
+      actions = '<button class="btn-sm btn-assign" onclick="openAssign(\'' + esc(start) + '\')">Atribuir unidade</button>';
+    } else if (status === 'pending') {
+      var info = title.replace('⏳ ','');
+      badge   = '<span class="badge badge-pending">⏳ ' + esc(info) + '</span>';
+      actions = '<button class="btn-sm btn-assign" onclick="openAssign(\'' + esc(start) + '\')" style="margin-right:6px">Atribuir</button>' +
+                '<button class="btn-sm btn-release" onclick="doRelease(\'' + esc(start) + '\')">Liberar</button>';
+    } else if (status === 'assigned') {
+      badge   = '<span class="badge badge-assigned">✅ ' + esc(title) + '</span>';
+      actions = '<button class="btn-sm btn-assign" onclick="openAssign(\'' + esc(start) + '\')" style="margin-right:6px">Reatribuir</button>' +
+                '<button class="btn-sm btn-release" onclick="doRelease(\'' + esc(start) + '\')">Liberar</button>';
+    } else {
+      badge   = '<span class="badge badge-other">' + esc(title) + '</span>';
+      actions = '<button class="btn-sm btn-release" onclick="doRelease(\'' + esc(start) + '\')">Liberar</button>';
+    }
+
+    html += '<tr><td>' + fmtDate(start) + '</td><td>' + fmtTime(start) + '</td><td>' + badge + '</td><td>' + actions + '</td></tr>';
+  });
+  tbody.innerHTML = html;
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+function openAssign(start) {
+  pendingStart = start;
+  document.getElementById('modalSlotInfo').textContent = fmtDate(start) + ' às ' + fmtTime(start);
+  document.getElementById('unitSearch').value = '';
+  filterUnits();
+  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('unitSearch').focus();
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  pendingStart = null;
+}
+
+function filterUnits() {
+  var q = document.getElementById('unitSearch').value.toUpperCase();
+  var sel = document.getElementById('unitSelect');
+  sel.innerHTML = '';
+  var filtered = allUnits.filter(function(u) { return !q || u.indexOf(q) !== -1; });
+  filtered.forEach(function(u) {
+    var opt = document.createElement('option');
+    opt.value = u;
+    opt.textContent = u;
+    sel.appendChild(opt);
+  });
+  if (filtered.length) sel.selectedIndex = 0;
+}
+
+function confirmAssign() {
+  var sel = document.getElementById('unitSelect');
+  if (!sel.value) { showToast('Selecione uma unidade', 'err'); return; }
+  var unit  = sel.value;
+  var start = pendingStart;
+  closeModal();
+
+  fetch(SCRIPT_URL + '?action=assign&start=' + encodeURIComponent(start) + '&unit=' + encodeURIComponent(unit) + '&token=' + encodeURIComponent(token), { redirect: 'follow' })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.success) {
+        showToast('✅ ' + unit + ' atribuído com sucesso', 'ok');
+        setTimeout(function() { loadSlots(); }, 800);
+      } else {
+        showToast('Erro: ' + (d.error || 'falha'), 'err');
+      }
+    })
+    .catch(function() { showToast('Erro de conexão', 'err'); });
+}
+
+function doRelease(start) {
+  if (!confirm('Liberar este slot e marcar como DISPONÍVEL?')) return;
+  fetch(SCRIPT_URL + '?action=release&start=' + encodeURIComponent(start) + '&token=' + encodeURIComponent(token), { redirect: 'follow' })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.success) {
+        showToast('Slot liberado', 'ok');
+        setTimeout(function() { loadSlots(); }, 800);
+      } else {
+        showToast('Erro: ' + (d.error || 'falha'), 'err');
+        if (d.error === 'Token inválido.') { document.getElementById('mainWrap').style.display = 'none'; document.getElementById('loginWrap').style.display = ''; }
+      }
+    })
+    .catch(function() { showToast('Erro de conexão', 'err'); });
+}
+
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + (type || '');
+  setTimeout(function() { t.className = 'toast'; }, 3000);
+}
+</script>
+</body>
+</html>
