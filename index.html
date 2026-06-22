@@ -141,7 +141,7 @@
   <div class="hero">
     <span class="hero-tag">Manifestação de Interesse</span>
     <h1>Indique sua preferência de data e horário</h1>
-    <p>Esta página é apenas para <strong>manifestação de interesse</strong>. O agendamento oficial da vistoria de entrega deve ser solicitado pelo <strong>CV CRM Cliente</strong> (aba Atendimento no app ou pelo site), conforme orientado no Manual de Entrega do Imóvel. Selecione um horário de preferência abaixo e preencha seus dados — nossa equipe entrará em contato para confirmar.</p>
+    <p>Esta página é apenas para <strong>manifestação de interesse</strong>. O agendamento oficial da vistoria de entrega deve ser solicitado pelo <strong>WhatsApp</strong>, conforme orientado no Manual de Entrega do Imóvel. Selecione um horário de preferência abaixo e preencha seus dados — nossa equipe entrará em contato para confirmar.</p>
   </div>
 
   <div class="steps">
@@ -162,8 +162,8 @@
     <div class="step">
       <div class="step-num">3</div>
       <div>
-        <div class="step-title">Solicite pelo CV CRM</div>
-        <div class="step-desc">Acesse o app CV CRM Cliente (aba Atendimento) e solicite a vistoria de entrega.</div>
+        <div class="step-title">Confirme pelo WhatsApp</div>
+        <div class="step-desc">Entre em contato pelo WhatsApp da equipe para confirmar a vistoria de entrega, conforme o Manual de Entrega.</div>
       </div>
     </div>
   </div>
@@ -186,17 +186,17 @@
 
   <div class="notice">
     <span style="font-size:16px;flex-shrink:0">ℹ️</span>
-    <p class="notice-text">Slots em <strong>azul</strong> estão disponíveis. Slots em <strong>amarelo</strong> estão com interesse manifestado e aguardam confirmação. Caso um slot não seja confirmado no CV CRM em 24h, ele será liberado automaticamente.</p>
+    <p class="notice-text">Slots em <strong>azul</strong> estão disponíveis. Slots em <strong>amarelo</strong> estão com interesse manifestado e aguardam confirmação. Caso um slot não seja confirmado pelo WhatsApp em 24h, ele será liberado automaticamente.</p>
   </div>
 
   <div class="cta">
     <div class="cta-text">
-      <p>Já manifestou interesse? Finalize pelo CV CRM</p>
-      <p>Acesse a aba Atendimento no app ou pelo site para solicitar a vistoria de entrega.</p>
+      <p>Já manifestou interesse? Confirme pelo WhatsApp</p>
+      <p>Entre em contato com nossa equipe pelo WhatsApp para confirmar a vistoria de entrega, conforme o Manual de Entrega do Imóvel.</p>
     </div>
-    <a class="cta-btn" href="https://ecbiesek.cvcrm.com.br/cliente" target="_blank" rel="noopener">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-      Acessar CV CRM Cliente
+    <a class="cta-btn" href="https://wa.me/NUMERO" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      Falar pelo WhatsApp
     </a>
   </div>
 
@@ -514,7 +514,7 @@ document.addEventListener('click', function(e) {
 // ============================================================
 document.getElementById('btnConfirm').addEventListener('click', function() {
   if (!pendingSlot || !SCRIPT_URL) {
-    showResult(false, 'Sistema em configuração', 'O agendamento online estará disponível em breve. Por favor, acesse o CV CRM Cliente para solicitar a entrega.');
+    showResult(false, 'Sistema em configuração', 'O agendamento online estará disponível em breve. Entre em contato pelo WhatsApp para solicitar a entrega.');
     return;
   }
 
@@ -540,7 +540,7 @@ document.getElementById('btnConfirm').addEventListener('click', function() {
     })
     .then(function(data) {
       if (data && data.success) {
-        showResult(true, 'Interesse registrado!', 'Seu horário foi reservado com sucesso. Agora acesse o app CV CRM Cliente (aba Atendimento) ou o site ecbiesek.cvcrm.com.br/cliente e solicite a vistoria de entrega para confirmar.');
+        showResult(true, 'Interesse registrado!', 'Seu horário foi reservado com sucesso. Agora entre em contato pelo WhatsApp da equipe para confirmar a vistoria de entrega, conforme o Manual de Entrega do Imóvel.');
       } else {
         showResult(false, 'Horário indisponível', (data && data.error) || 'Este horário foi reservado por outro cliente. Escolha outro slot.');
       }
