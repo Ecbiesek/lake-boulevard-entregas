@@ -286,7 +286,7 @@ var calendarEncoded = encodeURIComponent(CAL_ID);
 function fetchEvents() {
   var now     = new Date();
   var timeMin = now.toISOString();
-  var timeMax = new Date('2026-07-08T00:00:00-04:00').toISOString();
+  var timeMax = new Date('2026-09-01T00:00:00-04:00').toISOString();
   var url = 'https://www.googleapis.com/calendar/v3/calendars/' +
             calendarEncoded + '/events' +
             '?key=' + API_KEY +
