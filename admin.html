@@ -350,6 +350,8 @@ function doRelease(start) {
 }
 
 // Calcula data de corte: hoje + 5 dias não-domingo (sábado conta)
+// Retorna o PRIMEIRO dia permitido; getEvents usa limite exclusivo, então
+// slots até o dia anterior serão removidos.
 function calcCutoff() {
   var d = new Date();
   d.setHours(0, 0, 0, 0);
@@ -358,6 +360,8 @@ function calcCutoff() {
     d.setDate(d.getDate() + 1);
     if (d.getDay() !== 0) count++; // 0 = domingo
   }
+  // d = último dia a remover; +1 para que getEvents o inclua (limite exclusivo)
+  d.setDate(d.getDate() + 1);
   return d;
 }
 
