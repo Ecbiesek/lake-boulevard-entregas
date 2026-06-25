@@ -91,7 +91,7 @@
 
 <!-- MAIN -->
 <div class="main" id="mainWrap" style="display:none">
-  <div class="section-title">Slots — 26 jun a 7 jul 2026</div>
+  <div class="section-title">Slots — 26 jun a 31 ago 2026</div>
   <table class="slot-table" id="slotTable">
     <thead>
       <tr>
@@ -166,7 +166,7 @@ function showMain() {
 
 function loadSlots() {
   var now    = new Date('2026-06-26T00:00:00-04:00').toISOString();
-  var end    = new Date('2026-07-08T00:00:00-04:00').toISOString();
+  var end    = new Date('2026-09-01T00:00:00-04:00').toISOString();
   var url    = 'https://www.googleapis.com/calendar/v3/calendars/' +
                encodeURIComponent(CAL_ID) +
                '/events?key=' + API_KEY +
