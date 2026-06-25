@@ -91,7 +91,10 @@
 
 <!-- MAIN -->
 <div class="main" id="mainWrap" style="display:none">
-  <div class="section-title">Slots — 26 jun a 31 ago 2026</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <div class="section-title" style="margin-bottom:0">Slots — 26 jun a 31 ago 2026</div>
+    <button class="btn-sm" id="btnClear" onclick="doClearExpired()" style="background:#fee2e2;color:#dc2626;font-size:12px;padding:6px 14px">🗑 Limpar slots vencidos</button>
+  </div>
   <table class="slot-table" id="slotTable">
     <thead>
       <tr>
@@ -344,6 +347,46 @@ function doRelease(start) {
       }
     })
     .catch(function() { showToast('Erro de conexão', 'err'); });
+}
+
+// Calcula data de corte: hoje + 5 dias não-domingo (sábado conta)
+function calcCutoff() {
+  var d = new Date();
+  d.setHours(0, 0, 0, 0);
+  var count = 0;
+  while (count < 5) {
+    d.setDate(d.getDate() + 1);
+    if (d.getDay() !== 0) count++; // 0 = domingo
+  }
+  return d;
+}
+
+function doClearExpired() {
+  var cutoff = calcCutoff();
+  var label  = fmtDate(cutoff.toISOString());
+  if (!confirm('Remover todos os slots "DISPONÍVEL" antes de ' + label + '?\n\nEssa ação não pode ser desfeita.')) return;
+
+  var btn = document.getElementById('btnClear');
+  btn.disabled = true;
+  btn.textContent = 'Removendo…';
+
+  fetch(SCRIPT_URL + '?action=clearBefore&cutoff=' + encodeURIComponent(cutoff.toISOString()) + '&token=' + encodeURIComponent(token), { redirect: 'follow' })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      btn.disabled = false;
+      btn.textContent = '🗑 Limpar slots vencidos';
+      if (d.success) {
+        showToast(d.removed + ' slot(s) removido(s)', 'ok');
+        setTimeout(function() { loadSlots(); }, 600);
+      } else {
+        showToast('Erro: ' + (d.error || 'falha'), 'err');
+      }
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.textContent = '🗑 Limpar slots vencidos';
+      showToast('Erro de conexão', 'err');
+    });
 }
 
 function showToast(msg, type) {
