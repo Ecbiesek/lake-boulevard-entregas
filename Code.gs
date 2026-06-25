@@ -20,6 +20,8 @@ function doGet(e) {
     result = assignSlot(p.start, p.unit, p.token);
   } else if (p.action === 'release') {
     result = releaseSlot(p.start, p.token);
+  } else if (p.action === 'clearBefore') {
+    result = clearSlotsBeforeDate(p.cutoff, p.token);
   }
 
   var json = JSON.stringify(result);
@@ -124,6 +126,29 @@ function releaseSlot(startISO, token) {
     ev.setColor(CalendarApp.EventColor.CYAN);
     ev.setDescription('');
     return { success: true };
+  } catch (err) {
+    return { success: false, error: err.toString() };
+  }
+}
+
+// ------------------------------------------------------------
+// Admin: apaga slots disponíveis antes de uma data de corte
+// ------------------------------------------------------------
+function clearSlotsBeforeDate(cutoffISO, token) {
+  if (token !== ADMIN_TOKEN) return { success: false, error: 'Token inválido.' };
+  try {
+    var cal     = CalendarApp.getCalendarById(CALENDAR_ID);
+    var past    = new Date('2026-06-01T00:00:00-04:00');
+    var cutoff  = new Date(cutoffISO);
+    var events  = cal.getEvents(past, cutoff);
+    var removed = 0;
+    for (var i = 0; i < events.length; i++) {
+      if (events[i].getTitle() === 'SLOT DISPONÍVEL') {
+        events[i].deleteEvent();
+        removed++;
+      }
+    }
+    return { success: true, removed: removed };
   } catch (err) {
     return { success: false, error: err.toString() };
   }
